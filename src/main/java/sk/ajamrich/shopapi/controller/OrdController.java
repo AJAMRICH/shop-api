@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDateTime;
 
 import java.util.List;
 
@@ -18,8 +20,12 @@ public class OrdController {
     private OrdRepository ordRepository;
 
     @GetMapping
-    public List<Ord> getAll() {
-        return ordRepository.findAll();
+    public List<Ord> search(
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateFrom,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTo
+    ) {
+        return ordRepository.search(search, dateFrom, dateTo);
     }
 
     @PostMapping
