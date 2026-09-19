@@ -14,8 +14,8 @@ public interface OrdRepository extends JpaRepository<Ord, Long> {
 
     @Query("SELECT o FROM Ord o WHERE " +
             "(:search IS NULL OR LOWER(o.ordnum) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
-            "(:dateFrom IS NULL OR o.createdAt >= :dateFrom) AND " +
-            "(:dateTo IS NULL OR o.createdAt <= :dateTo) " +
+            "(CAST(:dateFrom AS timestamp) IS NULL OR o.createdAt >= :dateFrom) AND " +
+            "(CAST(:dateTo AS timestamp) IS NULL OR o.createdAt <= :dateTo) " +
             "ORDER BY o.id DESC")
     List<Ord> search(
             @Param("search") String search,
