@@ -13,7 +13,7 @@ import java.util.List;
 public interface OrdRepository extends JpaRepository<Ord, Long> {
 
     @Query("SELECT o FROM Ord o WHERE " +
-            "(:search IS NULL OR LOWER(o.ordnum) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
+            "(CAST(:search AS string) IS NULL OR LOWER(o.ordnum) LIKE LOWER(CONCAT('%', CAST(:search AS string), '%'))) AND " +
             "(CAST(:dateFrom AS timestamp) IS NULL OR o.createdAt >= :dateFrom) AND " +
             "(CAST(:dateTo AS timestamp) IS NULL OR o.createdAt <= :dateTo) " +
             "ORDER BY o.id DESC")
