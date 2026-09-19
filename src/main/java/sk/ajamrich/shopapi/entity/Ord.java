@@ -1,6 +1,8 @@
 package sk.ajamrich.shopapi.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ord")
@@ -16,6 +18,10 @@ public class Ord {
     @Column(nullable = false)
     private String stcust;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
     public Ord() {}
 
     public Ord(String ordnum, String stcust) {
@@ -29,4 +35,5 @@ public class Ord {
     public void setOrdnum(String ordnum) { this.ordnum = ordnum; }
     public String getStcust() { return stcust; }
     public void setStcust(String stcust) { this.stcust = stcust; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
